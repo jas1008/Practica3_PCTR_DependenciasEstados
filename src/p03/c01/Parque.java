@@ -34,21 +34,35 @@ public class Parque implements IParque{
 		
 		// Aumentamos el contador total y el individual
 		contadorPersonasTotales++;		
-		contadoresPersonasPuerta.put(puerta, contadoresPersonasPuerta.get(puerta)+1);
+		contadoresPersonasPuerta.put(puerta, contadoresPersonasPuerta.get(puerta) + 1);
 		
 		// Imprimimos el estado del parque
 		imprimirInfo(puerta, "Entrada");
 		
-		// TODO
-		
-		
-		// TODO
-		
+		checkInvariante();
+		notify();
 	}
 	
 	@Override
 	public void salirDelParque(String puerta) {
+		// Si no hay entradas por esa puerta, inicializamos
+		if (contadoresPersonasPuerta.get(puerta) == null){
+			contadoresPersonasPuerta.put(puerta, 0);
+		}
 		
+		// Llamada al metodo de comprobacion
+		comprobarAntesDeSalir();
+		
+		
+		// Aumentamos el contador total y el individual
+		contadorPersonasTotales--;		
+		contadoresPersonasPuerta.put(puerta, contadoresPersonasPuerta.get(puerta) - 1);
+		
+		// Imprimimos el estado del parque
+		imprimirInfo(puerta, "Salida");
+		
+		checkInvariante();
+		notify();
 	}
 	
 	private void imprimirInfo (String puerta, String movimiento){
