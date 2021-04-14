@@ -1,4 +1,4 @@
-package src.p03.c01;
+package p03.c01;
 
 import java.util.Enumeration;
 import java.util.Hashtable;
