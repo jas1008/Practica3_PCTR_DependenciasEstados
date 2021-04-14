@@ -8,28 +8,29 @@ public class Parque implements IParque{
 
 	// TODO 
 	
-	private static int AFORO = 50;
+	private int aforo;
 	private int contadorPersonasTotales;
 	private Hashtable<String, Integer> contadoresPersonasPuerta;
 	
 	
-	public Parque() {	// TODO
+	public Parque( int aforo ) { 
 		contadorPersonasTotales = 0;
 		contadoresPersonasPuerta = new Hashtable<String, Integer>();
-		// TODO
+		this.aforo=aforo;
 	}
 
 
 	@Override
-	public void entrarAlParque(String puerta){		// TODO
+	synchronized public void entrarAlParque(String puerta){
 		
 		// Si no hay entradas por esa puerta, inicializamos
 		if (contadoresPersonasPuerta.get(puerta) == null){
 			contadoresPersonasPuerta.put(puerta, 0);
 		}
 		
-		// TODO
-				
+		// Llamada al metodo de comprobacion
+		comprobarAntesDeEntrar();
+		
 		
 		// Aumentamos el contador total y el individual
 		contadorPersonasTotales++;		
@@ -71,15 +72,29 @@ public class Parque implements IParque{
 	}
 	
 	protected void checkInvariante() {
+		
+		
 		assert sumarContadoresPuerta() == contadorPersonasTotales : "INV: La suma de contadores de las puertas debe ser igual al valor del contador del parte";
 		// TODO 
 		// TODO
 	}
 
+	/**
+	 * Este metodo se encarga de dormir el hilo si el parque esta lleno
+	 */
 	protected void comprobarAntesDeEntrar(){	// TODO
-		//
-		// TODO
-		//
+		
+		
+		while ( contadorPersonasTotales == aforo  ) {
+			
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
+		}	
+		
 	}
 
 	protected void comprobarAntesDeSalir(){		// TODO
