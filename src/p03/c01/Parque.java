@@ -7,6 +7,8 @@ public class Parque implements IParque{
 
 
 	// TODO 
+	
+	private static int AFORO = 50;
 	private int contadorPersonasTotales;
 	private Hashtable<String, Integer> contadoresPersonasPuerta;
 	
